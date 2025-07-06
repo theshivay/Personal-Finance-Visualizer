@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { cn } from '../../lib/utils';
-import ThemeTransitionOverlay from '../ui/ThemeTransitionOverlay';
 
 // Dark mode toggle
 const ThemeToggle = () => {
