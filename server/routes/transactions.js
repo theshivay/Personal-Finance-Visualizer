@@ -1,89 +1,140 @@
 /**
- * Transaction routes
+ * Transaction Routes Module
+ * 
  * Handles all API endpoints for transaction CRUD operations
+ * Features:
+ * - Comprehensive filtering and pagination
+ * - Data validation
+ * - Category population
+ * - Error handling
+ * 
+ * All endpoints are prefixed with /api/transactions from main server
  */
 
 const express = require('express');
 const router = express.Router();
-const { check, validationResult } = require('express-validator');
-const Transaction = require('../models/Transaction');
+const { check, validationResult } = require('express-validator'); // For input validation
+const Transaction = require('../models/Transaction');             // Transaction data model
 
 /**
- * @route   GET /api/transactions
- * @desc    Get all transactions with pagination and filters
- * @access  Public
+ * GET /api/transactions
+ * 
+ * Retrieves transactions with advanced filtering, sorting, and pagination
+ * 
+ * Query Parameters:
+ * @param {number} page - Page number for pagination (default: 1)
+ * @param {number} limit - Number of results per page (default: 10)
+ * @param {string} sortBy - Field to sort by (default: date)
+ * @param {string} sortOrder - Sort direction: 'asc' or 'desc' (default: desc)
+ * @param {string} startDate - Filter transactions after this date (ISO format)
+ * @param {string} endDate - Filter transactions before this date (ISO format)
+ * @param {string} category - Filter by category ID
+ * @param {string} type - Filter by transaction type (expense/income)
+ * 
+ * @returns {Object} Paginated transaction list with metadata
  */
 router.get('/', async (req, res) => {
   try {
+    // Extract and parse query parameters with defaults
     const {
-      page = 1,
-      limit = 10,
-      sortBy = 'date',
-      sortOrder = 'desc',
-      startDate,
-      endDate,
-      category,
-      type
+      page = 1,          // Current page number
+      limit = 10,        // Items per page
+      sortBy = 'date',   // Default sort field
+      sortOrder = 'desc', // Default sort direction (newest first)
+      startDate,         // Optional date range start
+      endDate,           // Optional date range end
+      category,          // Optional category filter
+      type               // Optional transaction type filter
     } = req.query;
 
-    // Build filter object
+    // Build MongoDB filter object based on query parameters
     const filter = {};
     
-    // Date range filter
+    // Apply date range filter if provided
     if (startDate || endDate) {
       filter.date = {};
+      // Greater than or equal to start date
       if (startDate) filter.date.$gte = new Date(startDate);
+      // Less than or equal to end date
       if (endDate) filter.date.$lte = new Date(endDate);
     }
     
-    // Category filter
+    // Filter by category if provided
     if (category) filter.categoryId = category;
     
-    // Type filter (expense/income)
+    // Filter by transaction type if provided (expense/income)
     if (type) filter.type = type;
 
-    // Count total documents for pagination
+    // Get total count for pagination metadata
     const total = await Transaction.countDocuments(filter);
     
-    // Execute query with pagination and sorting
+    // Execute main query with all filters, sorting and pagination
     const transactions = await Transaction.find(filter)
+      // Dynamic sorting based on query params
       .sort({ [sortBy]: sortOrder === 'asc' ? 1 : -1 })
-      .limit(limit * 1)
+      // Apply pagination
+      .limit(limit * 1)  // Convert to number
       .skip((page - 1) * limit)
+      // Populate category details instead of just IDs
       .populate('categoryId', 'name color icon')
       .exec();
 
-    // Return paginated results
+    // Return structured response with:
+    // 1. The actual transaction data
+    // 2. Pagination metadata for the client
     res.json({
-      transactions,
-      totalPages: Math.ceil(total / limit),
-      currentPage: page,
-      totalTransactions: total
+      transactions,                            // Transaction array
+      totalPages: Math.ceil(total / limit),    // Calculate total pages
+      currentPage: parseInt(page),             // Current page number
+      totalTransactions: total                 // Total count of matching records
     });
   } catch (error) {
+    // Log error for server-side debugging
     console.error('Error fetching transactions:', error);
-    res.status(500).json({ message: 'Server error', error: error.message });
+    
+    // Return appropriate error response to client
+    res.status(500).json({ 
+      message: 'Server error while fetching transactions', 
+      error: error.message 
+    });
   }
 });
 
 /**
- * @route   GET /api/transactions/:id
- * @desc    Get transaction by ID
- * @access  Public
+ * GET /api/transactions/:id
+ * 
+ * Retrieves a single transaction by its ID
+ * 
+ * URL Parameters:
+ * @param {string} id - MongoDB ObjectId of the transaction
+ * 
+ * @returns {Object} Transaction object with populated category data
+ * @returns {404} If transaction not found
+ * @returns {500} If server error occurs
  */
 router.get('/:id', async (req, res) => {
   try {
+    // Find transaction by ID and populate category details
     const transaction = await Transaction.findById(req.params.id)
-      .populate('category', 'name color icon');
+      .populate('categoryId', 'name color icon'); // Get category name, color and icon
     
+    // Handle case when transaction doesn't exist
     if (!transaction) {
       return res.status(404).json({ message: 'Transaction not found' });
     }
     
+    // Return the transaction data
     res.json(transaction);
   } catch (error) {
+    // Log error for debugging
     console.error('Error fetching transaction:', error);
-    res.status(500).json({ message: 'Server error', error: error.message });
+    
+    // Return error response
+    // Could be invalid ID format or database error
+    res.status(500).json({ 
+      message: 'Error retrieving transaction details', 
+      error: error.message 
+    });
   }
 });
 
@@ -140,7 +191,7 @@ router.put('/:id', [
       req.params.id,
       { $set: req.body },
       { new: true, runValidators: true }
-    ).populate('category', 'name color icon');
+    ).populate('categoryId', 'name color icon');
     
     if (!transaction) {
       return res.status(404).json({ message: 'Transaction not found' });

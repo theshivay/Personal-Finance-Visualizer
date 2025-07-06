@@ -1,41 +1,80 @@
+/**
+ * TransactionForm Component
+ * 
+ * A form component for creating and editing financial transactions
+ * Features:
+ * - Support for both new transactions and editing existing ones
+ * - Form validation with error messages
+ * - Integration with transaction and category contexts
+ * - Date formatting and handling
+ * - Proper error handling for API calls
+ */
+
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Button } from '../ui/button';
-import { Input } from '../ui/input';
-import { Label } from '../ui/label';
-import { Select, SelectOption } from '../ui/select';
-import { useTransactions } from '../../context/TransactionContext';
-import { useCategories } from '../../context/CategoryContext';
+import { Button } from '../ui/button';         // Reusable button component
+import { Input } from '../ui/input';           // Reusable input field
+import { Label } from '../ui/label';           // Reusable form label
+import { Select, SelectOption } from '../ui/select'; // Dropdown component
+import { useTransactions } from '../../context/TransactionContext'; // Transaction state management
+import { useCategories } from '../../context/CategoryContext';      // Categories state management
 
+/**
+ * Transaction Form Component
+ * 
+ * @param {Object} props - Component properties
+ * @param {Object} props.transaction - Existing transaction data (for editing mode)
+ * @param {Function} props.onSave - Callback after successful save
+ * @param {Function} props.onCancel - Callback for form cancellation
+ * @returns {JSX.Element} The rendered form
+ */
 export const TransactionForm = ({ transaction, onSave, onCancel }) => {
+  // Get transaction management functions from context
   const { addTransaction, updateTransaction } = useTransactions();
+  // Get available categories from context
   const { categories } = useCategories();
   
+  // Determine if we're editing an existing transaction or creating a new one
   const isEditing = !!transaction?._id;
   
-  // Ensure categories is an array
+  // Defensive programming: ensure categories is always an array
   const safeCategories = Array.isArray(categories) ? categories : [];
   
-  // Get categoryId, handling both string and object formats
+  /**
+   * Extract category ID from transaction data
+   * Handles different data formats that might come from the API
+   * @returns {string} The category ID or empty string
+   */
   const getCategoryId = () => {
+    // If no transaction or no categoryId, use first available category or empty string
     if (!transaction?.categoryId) {
       return safeCategories.length > 0 ? safeCategories[0]._id : '';
     }
     
-    // If categoryId is an object with _id property, use that
+    // Handle case when categoryId is a populated object (from MongoDB population)
     if (typeof transaction.categoryId === 'object' && transaction.categoryId !== null) {
       return transaction.categoryId._id;
     }
     
-    // Otherwise, use the categoryId directly (string)
+    // Handle case when categoryId is just the ID string
     return transaction.categoryId;
   };
   
+  /**
+   * Form state with default values
+   * Uses transaction data if in edit mode, otherwise empty values
+   */
   const [formData, setFormData] = useState({
-    amount: transaction?.amount || '',
-    description: transaction?.description || '',
-    date: transaction?.date ? new Date(transaction.date).toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
-    categoryId: getCategoryId(),
+    amount: transaction?.amount || '',  // Transaction amount
+    description: transaction?.description || '', // Transaction description
+    
+    // Format date as YYYY-MM-DD for HTML date input
+    // Use existing date or today as default
+    date: transaction?.date 
+      ? new Date(transaction.date).toISOString().split('T')[0] 
+      : new Date().toISOString().split('T')[0],
+      
+    categoryId: getCategoryId(), // Category selection
   });
   
   const [errors, setErrors] = useState({});
@@ -87,10 +126,17 @@ export const TransactionForm = ({ transaction, onSave, onCancel }) => {
     if (!validateForm()) return;
     
     try {
+      // Determine transaction type based on amount
+      const amount = parseFloat(formData.amount);
+      const type = amount >= 0 ? 'income' : 'expense';
+      
       const formattedData = {
         ...formData,
-        amount: parseFloat(formData.amount),
+        amount: amount,
+        type: type, // Explicitly set the type field
       };
+      
+      console.log('Sending transaction data:', formattedData);
       
       let result;
       if (isEditing) {

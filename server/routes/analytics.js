@@ -305,7 +305,7 @@ router.get('/dashboard-summary', async (req, res) => {
       {
         $lookup: {
           from: 'categories',
-          localField: 'category',
+          localField: 'categoryId',
           foreignField: '_id',
           as: 'categoryInfo'
         }
@@ -318,7 +318,7 @@ router.get('/dashboard-summary', async (req, res) => {
       },
       {
         $group: {
-          _id: '$category',
+          _id: '$categoryId',
           categoryName: { $first: { $ifNull: ['$categoryInfo.name', 'Uncategorized'] } },
           categoryColor: { $first: { $ifNull: ['$categoryInfo.color', '#6E7582'] } },
           total: { $sum: '$amount' }
@@ -345,7 +345,7 @@ router.get('/dashboard-summary', async (req, res) => {
     const recentTransactions = await Transaction.find()
       .sort({ date: -1 })
       .limit(5)
-      .populate('category', 'name color icon');
+      .populate('categoryId', 'name color icon');
     
     // Format the summary data
     const currentMonthIncome = currentMonthSummary.find(s => s._id === 'income')?.total || 0;

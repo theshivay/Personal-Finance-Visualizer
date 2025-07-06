@@ -1,16 +1,35 @@
+/**
+ * CategoryPieChart Component
+ * 
+ * A visualization component that displays spending distribution across categories
+ * using a pie chart. Features include:
+ * - Interactive segments with hover effects
+ * - Percentage labels for significant categories
+ * - Custom tooltips with detailed information
+ * - Responsive design that works in any container
+ * - Error states for missing or invalid data
+ */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  PieChart,
-  Pie,
-  Cell,
-  ResponsiveContainer,
-  Legend,
-  Tooltip,
+  PieChart,     // Chart container
+  Pie,          // Actual pie chart
+  Cell,         // Individual pie segments
+  ResponsiveContainer, // Wrapper for responsive design
+  Legend,       // Chart legend
+  Tooltip,      // Hover tooltips
 } from 'recharts';
 import { formatCurrency } from '../../lib/format';
 
-// Default color palette for the pie chart
+/**
+ * Predefined color palette for category visualization
+ * Each color represents a different category in the pie chart
+ * Colors are chosen for:
+ * - Accessibility (distinct even for color vision deficiency)
+ * - Visual harmony
+ * - Contrast with white text
+ */
 const COLORS = [
   '#3b82f6', // blue
   '#ef4444', // red
@@ -24,11 +43,25 @@ const COLORS = [
   '#84cc16', // lime
 ];
 
+/**
+ * Category Pie Chart component
+ * Visualizes spending distribution across different categories
+ * 
+ * @param {Object} props - Component props
+ * @param {Array} props.data - Array of category data objects with name and amount
+ * @returns {JSX.Element} Rendered chart or placeholder
+ */
 export const CategoryPieChart = ({ data }) => {
-  // Ensure data is an array
+  /**
+   * Defensive programming: ensure data is always an array
+   * This prevents runtime errors if data is null, undefined, or not an array
+   */
   const safeData = Array.isArray(data) ? data : [];
   
-  // If no data or empty array, show a placeholder
+  /**
+   * Handle empty data case
+   * Show a user-friendly message instead of an empty chart
+   */
   if (safeData.length === 0) {
     return (
       <div className="flex items-center justify-center h-[300px] bg-gray-50 rounded-lg">
@@ -37,23 +70,38 @@ export const CategoryPieChart = ({ data }) => {
     );
   }
 
-  // Calculate total amount for percentage calculation
+  /**
+   * Calculate the total amount across all categories
+   * This is used to determine the percentage for each category
+   * Takes care to handle non-numeric values by defaulting to 0
+   */
   const total = safeData.reduce((sum, item) => {
-    // Ensure amount is a number
+    // Ensure amount is a number to prevent NaN errors
     const amount = typeof item.amount === 'number' ? item.amount : 0;
+    // Use absolute value to handle negative amounts correctly
     return sum + Math.abs(amount);
   }, 0);
   
-  // Format data for the chart
+  /**
+   * Transform raw data into the format required by the chart component
+   * - Filter out invalid or zero entries
+   * - Format all values consistently
+   * - Calculate percentage for each category
+   */
   const formattedData = safeData
+    // Remove invalid entries (non-numeric or zero amounts)
     .filter(item => typeof item.amount === 'number' && item.amount !== 0)
+    // Map each entry to the format required by Recharts
     .map((item) => ({
-      name: item.name || 'Unknown',
-      value: Math.abs(item.amount),
-      percentage: ((Math.abs(item.amount) / total) * 100).toFixed(1),
+      name: item.name || 'Unknown', // Use 'Unknown' as fallback for missing names
+      value: Math.abs(item.amount), // Convert to absolute value for the chart
+      percentage: ((Math.abs(item.amount) / total) * 100).toFixed(1), // Calculate & format percentage
     }));
 
-  // If we have no valid data after filtering
+  /**
+   * Handle the case where all data was filtered out
+   * This could happen if all entries had invalid amounts
+   */
   if (formattedData.length === 0) {
     return (
       <div className="flex items-center justify-center h-[300px] bg-gray-50 rounded-lg">

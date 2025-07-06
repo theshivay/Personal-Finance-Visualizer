@@ -78,7 +78,7 @@ router.post('/', [
   try {
     // Check if budget already exists for this category/month/year
     const existingBudget = await Budget.findOne({
-      category: req.body.category,
+      categoryId: req.body.categoryId,
       month: req.body.month,
       year: req.body.year
     });
@@ -95,7 +95,7 @@ router.post('/', [
     
     // Populate category details and return
     const populatedBudget = await Budget.findById(savedBudget._id)
-      .populate('category', 'name color icon type');
+      .populate('categoryId', 'name color icon type');
     
     res.status(201).json(populatedBudget);
   } catch (error) {
@@ -130,7 +130,7 @@ router.put('/:id', [
       }
       
       const existingBudget = await Budget.findOne({
-        category: req.body.category || budget.category,
+        categoryId: req.body.categoryId || budget.categoryId,
         month: req.body.month || budget.month,
         year: req.body.year || budget.year,
         _id: { $ne: req.params.id }
@@ -148,7 +148,7 @@ router.put('/:id', [
       req.params.id,
       { $set: req.body },
       { new: true, runValidators: true }
-    ).populate('category', 'name color icon type');
+    ).populate('categoryId', 'name color icon type');
     
     if (!updatedBudget) {
       return res.status(404).json({ message: 'Budget not found' });
