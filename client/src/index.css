@@ -166,4 +166,70 @@
   .orientation-change {
     animation: orientationChange 0.3s ease;
   }
+
+  /* Enhanced mobile menu animations */
+  @keyframes menuItemAppear {
+    0% { 
+      opacity: 0;
+      transform: translateY(20px); 
+    }
+    100% { 
+      opacity: 1;
+      transform: translateY(0); 
+    }
+  }
+  
+  @keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+  }
+  
+  .animate-fade-out {
+    animation: fadeOut 0.2s ease-out forwards;
+  }
+
+  .mobile-menu-item {
+    animation: menuItemAppear 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  
+  .mobile-menu-item:nth-child(1) { animation-delay: 0.1s; }
+  .mobile-menu-item:nth-child(2) { animation-delay: 0.15s; }
+  .mobile-menu-item:nth-child(3) { animation-delay: 0.2s; }
+  .mobile-menu-item:nth-child(4) { animation-delay: 0.25s; }
+  
+  /* Enhanced dark mode glow effect for mobile nav buttons */
+  .dark .mobile-menu-item {
+    box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.4);
+  }
+  
+  .dark .mobile-menu-item:hover {
+    box-shadow: 0 8px 25px -5px rgba(0, 0, 0, 0.5);
+  }
+  
+  /* Color-specific glow effects for dark mode */
+  .dark .mobile-menu-item[href="/"] {
+    box-shadow: 0 5px 20px -5px rgba(37, 99, 235, 0.3);
+  }
+  
+  .dark .mobile-menu-item[href="/transactions"] {
+    box-shadow: 0 5px 20px -5px rgba(34, 197, 94, 0.3);
+  }
+  
+  .dark .mobile-menu-item[href="/categories"] {
+    box-shadow: 0 5px 20px -5px rgba(168, 85, 247, 0.3);
+  }
+  
+  .dark .mobile-menu-item[href="/budgets"] {
+    box-shadow: 0 5px 20px -5px rgba(245, 158, 11, 0.3);
+  }
+  
+  /* Enhanced touch feedback for mobile */
+  .touch-card-effect {
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  
+  .touch-card-effect:active {
+    transform: scale(0.97);
+  }
 }

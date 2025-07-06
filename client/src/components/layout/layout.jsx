@@ -113,7 +113,21 @@ export const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const toggleMenu = (e) => {
-    setMenuOpen(!menuOpen);
+    if (menuOpen) {
+      // Animate menu close
+      const menu = document.getElementById('mobile-menu');
+      if (menu) {
+        menu.classList.add('animate-fade-out');
+        setTimeout(() => {
+          setMenuOpen(false);
+        }, 200);
+      } else {
+        setMenuOpen(false);
+      }
+    } else {
+      // Open menu immediately
+      setMenuOpen(true);
+    }
   };
 
   // Close mobile menu when clicking outside
@@ -162,11 +176,46 @@ export const Header = () => {
 
         {/* Desktop Navigation */}
         <nav className="ml-auto hidden md:flex items-center gap-5 sm:gap-6">
-          <div className="flex items-center space-x-1 sm:space-x-2">
-            <NavLink to="/" end className="px-2 py-1">Dashboard</NavLink>
-            <NavLink to="/transactions" className="px-2 py-1">Transactions</NavLink>
-            <NavLink to="/categories" className="px-2 py-1">Categories</NavLink>
-            <NavLink to="/budgets" className="px-2 py-1">Budgets</NavLink>
+          <div className="flex items-center space-x-3 sm:space-x-4">
+            <NavLink 
+              to="/" 
+              end 
+              className="px-3 py-2 rounded-lg flex items-center text-sm font-medium hover:bg-blue-100/70 dark:hover:bg-blue-900/20"
+            >
+              <svg className="w-4 h-4 mr-1.5 text-blue-500 dark:text-blue-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+              </svg>
+              Dashboard
+            </NavLink>
+            <NavLink 
+              to="/transactions" 
+              className="px-3 py-2 rounded-lg flex items-center text-sm font-medium hover:bg-green-100/70 dark:hover:bg-green-900/20"
+            >
+              <svg className="w-4 h-4 mr-1.5 text-green-500 dark:text-green-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+              </svg>
+              Transactions
+            </NavLink>
+            <NavLink 
+              to="/categories" 
+              className="px-3 py-2 rounded-lg flex items-center text-sm font-medium hover:bg-purple-100/70 dark:hover:bg-purple-900/20"
+            >
+              <svg className="w-4 h-4 mr-1.5 text-purple-500 dark:text-purple-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"></path>
+              </svg>
+              Categories
+            </NavLink>
+            <NavLink 
+              to="/budgets" 
+              className="px-3 py-2 rounded-lg flex items-center text-sm font-medium hover:bg-amber-100/70 dark:hover:bg-amber-900/20"
+            >
+              <svg className="w-4 h-4 mr-1.5 text-amber-500 dark:text-amber-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+              </svg>
+              Budgets
+            </NavLink>
           </div>
           <div className="h-6 w-px bg-border-light dark:bg-border-dark mx-1"></div>
           <ThemeToggle />
@@ -209,40 +258,137 @@ export const Header = () => {
       {menuOpen && (
         <div 
           id="mobile-menu"
-          className="fixed inset-0 top-16 z-40 bg-gradient-to-b from-card-light/98 to-card-light/95 dark:from-card-dark/98 dark:to-card-dark/95 backdrop-blur-sm md:hidden animate-fade-in"
+          className="fixed inset-0 top-16 z-40 bg-gradient-to-b from-card-light/98 to-card-light/95 dark:from-gray-900/98 dark:to-slate-900/95 backdrop-blur-md md:hidden animate-fade-in"
         >
           <div className="absolute inset-0 overflow-hidden">
-            <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-primary-500/5 to-transparent dark:from-primary-800/10 dark:to-transparent"></div>
+            <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-primary-500/10 to-transparent dark:from-primary-600/15 dark:to-transparent"></div>
+            
+            {/* Animated background patterns - enhanced for dark mode */}
+            <div className="absolute inset-0 opacity-10 dark:opacity-10 pointer-events-none">
+              <div className="absolute top-[10%] left-[10%] w-32 h-32 rounded-full bg-blue-500 dark:bg-blue-400 blur-3xl"></div>
+              <div className="absolute top-[30%] right-[15%] w-40 h-40 rounded-full bg-purple-500 dark:bg-purple-400 blur-3xl"></div>
+              <div className="absolute bottom-[20%] left-[20%] w-36 h-36 rounded-full bg-amber-500 dark:bg-amber-400 blur-3xl"></div>
+              <div className="absolute bottom-[15%] right-[10%] w-28 h-28 rounded-full bg-green-500 dark:bg-green-400 blur-3xl"></div>
+            </div>
           </div>
-          <nav className="container relative flex flex-col items-center py-10 gap-6 text-lg">
+          <nav className="container relative flex flex-col items-center py-10 gap-5 text-lg w-full max-w-xs mx-auto">
+            {/* Dashboard Button with blue gradient - enhanced dark mode */}
             <NavLink 
               to="/" 
               end 
               onClick={() => setMenuOpen(false)}
-              className="py-3 px-8 rounded-full hover:bg-primary-100/20 dark:hover:bg-primary-900/20 transition-all duration-300"
+              className="mobile-menu-item w-full py-4 px-6 rounded-xl flex items-center justify-between 
+                bg-gradient-to-r from-blue-500/20 to-blue-600/10
+                dark:bg-gradient-to-r dark:from-blue-900/80 dark:to-blue-800/60
+                shadow-md hover:shadow-lg dark:shadow-blue-900/40
+                border border-blue-200 dark:border-blue-700/60
+                hover:border-blue-300 dark:hover:border-blue-600
+                backdrop-blur-sm transition-all duration-300
+                touch-ripple active:scale-[0.98]"
             >
-              Dashboard
+              <div className="flex items-center">
+                <div className="w-9 h-9 rounded-lg mr-3 flex items-center justify-center
+                  bg-gradient-to-br from-blue-400 to-blue-600 
+                  dark:bg-gradient-to-br dark:from-blue-400 dark:to-blue-600
+                  text-white shadow-md shadow-blue-500/30 dark:shadow-blue-500/50">
+                  <svg className="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                  </svg>
+                </div>
+                <span className="font-medium dark:text-white">Dashboard</span>
+              </div>
+              <svg className="w-5 h-5 text-blue-500 dark:text-blue-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
             </NavLink>
+            
+            {/* Transactions Button with green gradient - enhanced dark mode */}
             <NavLink 
               to="/transactions" 
               onClick={() => setMenuOpen(false)}
-              className="py-3 px-8 rounded-full hover:bg-primary-100/20 dark:hover:bg-primary-900/20 transition-all duration-300"
+              className="mobile-menu-item w-full py-4 px-6 rounded-xl flex items-center justify-between 
+                bg-gradient-to-r from-green-500/20 to-green-600/10
+                dark:bg-gradient-to-r dark:from-green-900/80 dark:to-green-800/60
+                shadow-md hover:shadow-lg dark:shadow-green-900/40
+                border border-green-200 dark:border-green-700/60
+                hover:border-green-300 dark:hover:border-green-600
+                backdrop-blur-sm transition-all duration-300
+                touch-ripple active:scale-[0.98]"
             >
-              Transactions
+              <div className="flex items-center">
+                <div className="w-9 h-9 rounded-lg mr-3 flex items-center justify-center
+                  bg-gradient-to-br from-green-400 to-green-600 
+                  dark:bg-gradient-to-br dark:from-green-400 dark:to-green-600
+                  text-white shadow-md shadow-green-500/30 dark:shadow-green-500/50">
+                  <svg className="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                  </svg>
+                </div>
+                <span className="font-medium dark:text-white">Transactions</span>
+              </div>
+              <svg className="w-5 h-5 text-green-500 dark:text-green-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
             </NavLink>
+            
+            {/* Categories Button with purple gradient - enhanced dark mode */}
             <NavLink 
               to="/categories" 
               onClick={() => setMenuOpen(false)}
-              className="py-3 px-8 rounded-full hover:bg-primary-100/20 dark:hover:bg-primary-900/20 transition-all duration-300"
+              className="mobile-menu-item w-full py-4 px-6 rounded-xl flex items-center justify-between
+                bg-gradient-to-r from-purple-500/20 to-purple-600/10
+                dark:bg-gradient-to-r dark:from-purple-900/80 dark:to-purple-800/60
+                shadow-md hover:shadow-lg dark:shadow-purple-900/40
+                border border-purple-200 dark:border-purple-700/60
+                hover:border-purple-300 dark:hover:border-purple-600
+                backdrop-blur-sm transition-all duration-300
+                touch-ripple active:scale-[0.98]"
             >
-              Categories
+              <div className="flex items-center">
+                <div className="w-9 h-9 rounded-lg mr-3 flex items-center justify-center
+                  bg-gradient-to-br from-purple-400 to-purple-600
+                  dark:bg-gradient-to-br dark:from-purple-400 dark:to-purple-600
+                  text-white shadow-md shadow-purple-500/30 dark:shadow-purple-500/50">
+                  <svg className="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"></path>
+                  </svg>
+                </div>
+                <span className="font-medium dark:text-white">Categories</span>
+              </div>
+              <svg className="w-5 h-5 text-purple-500 dark:text-purple-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
             </NavLink>
+            
+            {/* Budgets Button with amber/orange gradient - enhanced dark mode */}
             <NavLink 
               to="/budgets" 
               onClick={() => setMenuOpen(false)}
-              className="py-3 px-8 rounded-full hover:bg-primary-100/20 dark:hover:bg-primary-900/20 transition-all duration-300"
+              className="mobile-menu-item w-full py-4 px-6 rounded-xl flex items-center justify-between 
+                bg-gradient-to-r from-amber-500/20 to-amber-600/10
+                dark:bg-gradient-to-r dark:from-amber-900/80 dark:to-amber-800/60
+                shadow-md hover:shadow-lg dark:shadow-amber-900/40
+                border border-amber-200 dark:border-amber-700/60
+                hover:border-amber-300 dark:hover:border-amber-600
+                backdrop-blur-sm transition-all duration-300
+                touch-ripple active:scale-[0.98]"
             >
-              Budgets
+              <div className="flex items-center">
+                <div className="w-9 h-9 rounded-lg mr-3 flex items-center justify-center
+                  bg-gradient-to-br from-amber-400 to-amber-600
+                  dark:bg-gradient-to-br dark:from-amber-400 dark:to-amber-600
+                  text-white shadow-md shadow-amber-500/30 dark:shadow-amber-500/50">
+                  <svg className="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                  </svg>
+                </div>
+                <span className="font-medium dark:text-white">Budgets</span>
+              </div>
+              <svg className="w-5 h-5 text-amber-500 dark:text-amber-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
             </NavLink>
           </nav>
         </div>
@@ -259,7 +405,7 @@ export const NavLink = ({ to, end = false, children, className, ...props }) => {
     <Link
       to={to}
       className={cn(
-        'text-sm font-medium transition-all duration-300 hover:text-primary-500 relative group',
+        'text-sm font-medium transition-all duration-300 hover:text-primary-500 relative group touch-ripple',
         isActive 
           ? 'text-primary-500 dark:text-primary-400 font-semibold' 
           : 'text-foreground-light dark:text-foreground-dark',
@@ -268,10 +414,13 @@ export const NavLink = ({ to, end = false, children, className, ...props }) => {
       {...props}
     >
       {children}
-      <span className={cn(
-        'absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-primary-500 to-accent transition-all duration-300 ease-out group-hover:w-full rounded-full',
-        isActive ? 'w-full shadow-sm shadow-primary-500/30' : 'w-0'
-      )} />
+      {/* Only show underline indicator for default styling (without custom className overrides) */}
+      {!className?.includes('bg-gradient') && (
+        <span className={cn(
+          'absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-primary-500 to-accent transition-all duration-300 ease-out group-hover:w-full rounded-full',
+          isActive ? 'w-full shadow-sm shadow-primary-500/30' : 'w-0'
+        )} />
+      )}
     </Link>
   );
 };
