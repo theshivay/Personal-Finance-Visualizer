@@ -20,8 +20,8 @@ export const BudgetComparisonChart = ({ data }) => {
   // If no data, show placeholder
   if (safeData.length === 0) {
     return (
-      <div className="flex items-center justify-center h-[300px] bg-gray-50 rounded-lg">
-        <p className="text-muted">No budget comparison data available</p>
+      <div className="flex items-center justify-center h-[300px] bg-background-light/50 dark:bg-background-dark/80 rounded-lg border border-border-light dark:border-border-dark">
+        <p className="text-muted-light dark:text-muted-dark">No budget comparison data available</p>
       </div>
     );
   }
@@ -52,12 +52,12 @@ export const BudgetComparisonChart = ({ data }) => {
       const status = dataPoint?.status || (isUnderBudget ? 'within' : 'exceeded');
       
       return (
-        <div className="bg-white p-3 border rounded shadow-sm">
-          <p className="font-medium">{label}</p>
+        <div className="bg-card-light dark:bg-card-dark p-4 border border-border-light dark:border-border-dark rounded-lg shadow-md">
+          <p className="font-medium text-foreground-light dark:text-foreground-dark border-b border-border-light dark:border-border-dark pb-1 mb-2">{label}</p>
           {payload.map((entry, index) => (
-            <p key={`tooltip-${index}`} style={{ color: entry.color }}>
-              <span className="font-medium">{entry.name}: </span>
-              {formatCurrency(entry.value)}
+            <p key={`tooltip-${index}`} className="flex items-center justify-between mb-1">
+              <span className="font-medium text-foreground-light dark:text-foreground-dark">{entry.name}: </span>
+              <span style={{ color: entry.color }}>{formatCurrency(entry.value)}</span>
             </p>
           ))}
           

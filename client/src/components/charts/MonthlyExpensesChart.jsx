@@ -17,8 +17,8 @@ export const MonthlyExpensesChart = ({ data }) => {
 
   if (safeData.length === 0) {
     return (
-      <div className="flex items-center justify-center h-[300px] bg-gray-50 rounded-lg">
-        <p className="text-muted">No monthly expenses data available</p>
+      <div className="flex items-center justify-center h-[300px] bg-background-light/50 dark:bg-background-dark/80 rounded-lg border border-border-light dark:border-border-dark">
+        <p className="text-muted-light dark:text-muted-dark">No monthly expenses data available</p>
       </div>
     );
   }
@@ -57,14 +57,20 @@ export const MonthlyExpensesChart = ({ data }) => {
           bottom: 5,
         }}
       >
-        <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+        <CartesianGrid 
+          strokeDasharray="3 3" 
+          stroke="var(--chart-grid-color, #e5e7eb)" 
+          opacity={0.3}
+        />
         <XAxis 
           dataKey="month" 
-          axisLine={{ stroke: '#e5e7eb' }}
+          axisLine={{ stroke: 'var(--chart-axis-color, #e5e7eb)' }}
+          tick={{ fill: 'var(--chart-text-color, #1f2937)' }}
           tickLine={false}
         />
         <YAxis
-          axisLine={{ stroke: '#e5e7eb' }}
+          axisLine={{ stroke: 'var(--chart-axis-color, #e5e7eb)' }}
+          tick={{ fill: 'var(--chart-text-color, #1f2937)' }}
           tickLine={false}
           tickFormatter={(value) => `$${value}`}
         />
@@ -72,16 +78,20 @@ export const MonthlyExpensesChart = ({ data }) => {
           formatter={(value) => [`$${value}`, 'Expenses']}
           labelFormatter={(label) => `Month: ${label}`}
           contentStyle={{
-            backgroundColor: 'white',
-            borderColor: '#e5e7eb',
-            borderRadius: '4px',
-            boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1)',
+            backgroundColor: 'var(--tooltip-bg, #fff)',
+            color: 'var(--tooltip-text, #1f2937)',
+            borderColor: 'var(--tooltip-border, #e5e7eb)',
+            borderRadius: '8px',
+            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
           }}
+          cursor={{ fill: 'var(--chart-hover-color, rgba(99, 102, 241, 0.1))' }}
         />
         <Bar 
           dataKey="expenses" 
-          fill="#3b82f6" 
-          radius={[4, 4, 0, 0]} 
+          fill="var(--chart-bar-color, #6366f1)" 
+          radius={[6, 6, 0, 0]}
+          animationDuration={800}
+          animationEasing="ease-in-out"
         />
       </BarChart>
     </ResponsiveContainer>

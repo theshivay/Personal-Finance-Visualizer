@@ -31,16 +31,16 @@ import { formatCurrency } from '../../lib/format';
  * - Contrast with white text
  */
 const COLORS = [
-  '#3b82f6', // blue
-  '#ef4444', // red
-  '#10b981', // green
-  '#f59e0b', // amber
+  '#6366f1', // indigo/primary
+  '#10b981', // emerald/accent
+  '#f97316', // orange
   '#8b5cf6', // violet
   '#ec4899', // pink
   '#06b6d4', // cyan
-  '#f97316', // orange
-  '#6366f1', // indigo
+  '#f59e0b', // amber
   '#84cc16', // lime
+  '#ef4444', // red
+  '#3b82f6', // blue
 ];
 
 /**
@@ -64,8 +64,8 @@ export const CategoryPieChart = ({ data }) => {
    */
   if (safeData.length === 0) {
     return (
-      <div className="flex items-center justify-center h-[300px] bg-gray-50 rounded-lg">
-        <p className="text-muted">No category data available</p>
+      <div className="flex items-center justify-center h-[300px] bg-background-light/50 dark:bg-background-dark/80 rounded-lg border border-border-light dark:border-border-dark">
+        <p className="text-muted-light dark:text-muted-dark">No category data available</p>
       </div>
     );
   }
@@ -104,8 +104,8 @@ export const CategoryPieChart = ({ data }) => {
    */
   if (formattedData.length === 0) {
     return (
-      <div className="flex items-center justify-center h-[300px] bg-gray-50 rounded-lg">
-        <p className="text-muted">No valid category data available</p>
+      <div className="flex items-center justify-center h-[300px] bg-background-light/50 dark:bg-background-dark/80 rounded-lg border border-border-light dark:border-border-dark">
+        <p className="text-muted-light dark:text-muted-dark">No valid category data available</p>
       </div>
     );
   }
@@ -117,39 +117,51 @@ export const CategoryPieChart = ({ data }) => {
     innerRadius,
     outerRadius,
     percent,
+    fill,
   }) => {
     const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
     const x = cx + radius * Math.cos(-midAngle * (Math.PI / 180));
     const y = cy + radius * Math.sin(-midAngle * (Math.PI / 180));
 
+    // Only show label for segments that are large enough (more than 5%)
     return percent > 0.05 ? (
       <text
         x={x}
         y={y}
-        fill="white"
+        fill="white" // White text stands out well on all color backgrounds
         textAnchor="middle"
         dominantBaseline="central"
         fontSize={12}
+        fontWeight="bold"
+        stroke="none" // No stroke for cleaner text
+        className="chart-label" // Allow potential CSS styling
       >
         {`${(percent * 100).toFixed(0)}%`}
       </text>
     ) : null;
   };
 
-  // Custom tooltip
+  // Custom tooltip with dark mode support
   const customTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
+      const color = payload[0]?.color || '#6366f1';
       return (
-        <div className="bg-white p-3 border rounded shadow-sm">
-          <p className="font-medium">{payload[0].name}</p>
-          <p>
-            <span className="font-medium">Amount: </span>
-            {formatCurrency(payload[0].value)}
-          </p>
-          <p>
-            <span className="font-medium">Percentage: </span>
-            {payload[0].payload.percentage}%
-          </p>
+        <div className="bg-card-light dark:bg-card-dark p-4 border border-border-light dark:border-border-dark rounded-lg shadow-md">
+          <p className="font-medium text-foreground-light dark:text-foreground-dark border-b border-border-light dark:border-border-dark pb-2 mb-2">{payload[0].name}</p>
+          <div className="space-y-1">
+            <p className="flex items-center justify-between">
+              <span className="font-medium text-muted-light dark:text-muted-dark">Amount: </span>
+              <span className="font-bold text-foreground-light dark:text-foreground-dark" style={{ color }}>
+                {formatCurrency(payload[0].value)}
+              </span>
+            </p>
+            <p className="flex items-center justify-between">
+              <span className="font-medium text-muted-light dark:text-muted-dark">Percentage: </span>
+              <span className="font-bold text-foreground-light dark:text-foreground-dark" style={{ color }}>
+                {payload[0].payload.percentage}%
+              </span>
+            </p>
+          </div>
         </div>
       );
     }
@@ -181,7 +193,8 @@ export const CategoryPieChart = ({ data }) => {
           layout="horizontal"
           verticalAlign="bottom"
           align="center"
-          formatter={(value) => <span className="text-sm">{value}</span>}
+          formatter={(value) => <span className="text-sm text-foreground-light dark:text-foreground-dark font-medium">{value}</span>}
+          wrapperStyle={{ paddingTop: '20px' }}
         />
       </PieChart>
     </ResponsiveContainer>

@@ -1,4 +1,28 @@
 /* Add custom styles here that can't be easily done with Tailwind */
+:root {
+  /* Light theme variables */
+  --chart-grid-color: #e5e7eb;
+  --chart-axis-color: #d1d5db;
+  --chart-text-color: #4b5563;
+  --chart-bar-color: #6366f1;
+  --chart-hover-color: rgba(99, 102, 241, 0.1);
+  --tooltip-bg: #ffffff;
+  --tooltip-text: #1f2937;
+  --tooltip-border: #e5e7eb;
+}
+
+/* Dark theme variables */
+.dark {
+  --chart-grid-color: #374151;
+  --chart-axis-color: #4b5563;
+  --chart-text-color: #e5e7eb;
+  --chart-bar-color: #818cf8;
+  --chart-hover-color: rgba(129, 140, 248, 0.2);
+  --tooltip-bg: #1f2937;
+  --tooltip-text: #f9fafb;
+  --tooltip-border: #374151;
+}
+
 .recharts-wrapper .recharts-cartesian-grid-horizontal line:last-child,
 .recharts-wrapper .recharts-cartesian-grid-vertical line:last-child {
   stroke-opacity: 0;
@@ -29,8 +53,13 @@
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  border-left-color: #3b82f6;
+  border-left-color: #6366f1;
   animation: spin 1s linear infinite;
+}
+
+.dark .spinner {
+  border: 4px solid rgba(255, 255, 255, 0.1);
+  border-left-color: #818cf8;
 }
 
 @keyframes spin {
@@ -40,4 +69,23 @@
   100% {
     transform: rotate(360deg);
   }
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideInUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out;
+}
+
+.animate-slide-in {
+  animation: slideInUp 0.5s ease-out;
 }

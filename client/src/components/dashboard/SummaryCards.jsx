@@ -3,36 +3,71 @@ import PropTypes from 'prop-types';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { formatCurrency, formatDate } from '../../lib/format';
 
-export const SummaryCard = ({ title, value, icon, change, changeText, changeType = 'neutral', loading = false }) => {
+export const SummaryCard = ({ title, value, icon, change, changeText, changeType = 'neutral', loading = false, highlight = false }) => {
+  let cardStyles = {};
+  
+  // Define card styles based on type
+  if (changeType === 'positive') {
+    cardStyles = {
+      icon: 'bg-gradient-to-br from-emerald-400/30 to-emerald-500/30 text-emerald-500 dark:text-emerald-400',
+      changeColor: 'text-emerald-600 dark:text-emerald-400',
+      highlight: 'from-emerald-500 to-emerald-600'
+    };
+  } else if (changeType === 'negative') {
+    cardStyles = {
+      icon: 'bg-gradient-to-br from-red-400/30 to-red-500/30 text-red-500 dark:text-red-400',
+      changeColor: 'text-red-600 dark:text-red-400',
+      highlight: 'from-red-500 to-red-600'
+    };
+  } else {
+    cardStyles = {
+      icon: 'bg-gradient-to-br from-primary-400/30 to-primary-500/30 text-primary-500 dark:text-primary-400',
+      changeColor: 'text-muted-light dark:text-muted-dark',
+      highlight: 'from-primary-500 to-primary-600'
+    };
+  }
+  
   return (
-    <Card>
+    <Card highlight={highlight}>
       <CardHeader className="pb-2">
-        <CardTitle className="text-sm font-medium text-muted">{title}</CardTitle>
+        <CardTitle className="text-sm font-medium text-muted-light dark:text-muted-dark flex items-center gap-2">
+          {icon && (
+            <div className={`h-8 w-8 rounded-lg ${cardStyles.icon} flex items-center justify-center shadow-md`}>
+              {icon}
+            </div>
+          )}
+          {title}
+        </CardTitle>
       </CardHeader>
       <CardContent>
         {loading ? (
           <div className="flex items-center justify-center h-12">
-            <p className="text-sm text-muted">Loading...</p>
+            <div className="animate-pulse flex space-x-4">
+              <div className="h-5 w-24 bg-muted-light/20 dark:bg-muted-dark/20 rounded"></div>
+            </div>
           </div>
         ) : (
-          <div className="flex justify-between items-center">
-            <div>
-              <div className="text-2xl font-bold">
-                {typeof value === 'string' ? value : formatCurrency(value)}
-              </div>
-              {change !== undefined && (
-                <p className={`text-sm ${
-                  changeType === 'positive' ? 'text-green-600' : 
-                  changeType === 'negative' ? 'text-red-600' : 'text-muted'
-                }`}>
-                  {change > 0 ? '+' : ''}{change}% {changeText}
-                </p>
-              )}
+          <div className="flex flex-col">
+            <div className="text-3xl font-bold bg-gradient-to-r from-primary-500 to-primary-600 bg-clip-text text-transparent">
+              {typeof value === 'string' ? value : formatCurrency(value)}
             </div>
-            {icon && (
-              <div className="h-9 w-9 rounded-full bg-primary-100 flex items-center justify-center">
-                {icon}
-              </div>
+            {change !== undefined && (
+              <p className={`text-sm mt-2 flex items-center ${cardStyles.changeColor}`}>
+                {change > 0 ? (
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M12 7a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0V8.414l-4.293 4.293a1 1 0 01-1.414 0L8 10.414l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0L11 10.586 14.586 7H12z" clipRule="evenodd" />
+                  </svg>
+                ) : change < 0 ? (
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M12 13a1 1 0 100 2h5a1 1 0 001-1v-5a1 1 0 10-2 0v2.586l-4.293-4.293a1 1 0 00-1.414 0L8 9.586l-4.293-4.293a1 1 0 00-1.414 1.414l5 5a1 1 0 001.414 0L11 9.414 14.586 13H12z" clipRule="evenodd" />
+                  </svg>
+                ) : (
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M5 10a1 1 0 011-1h8a1 1 0 110 2H6a1 1 0 01-1-1z" clipRule="evenodd" />
+                  </svg>
+                )}
+                {Math.abs(change)}% {changeText}
+              </p>
             )}
           </div>
         )}
