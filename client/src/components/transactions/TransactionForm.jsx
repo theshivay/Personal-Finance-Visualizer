@@ -224,11 +224,11 @@ export const TransactionForm = ({ transaction, onSave, onCancel }) => {
         </div>
       )}
       
-      <div className="flex justify-end space-x-2">
-        <Button type="button" variant="outline" onClick={onCancel}>
+      <div className="flex flex-col sm:flex-row justify-end gap-2">
+        <Button type="button" variant="outline" onClick={onCancel} className="w-full sm:w-auto order-2 sm:order-1">
           Cancel
         </Button>
-        <Button type="submit">
+        <Button type="submit" className="w-full sm:w-auto order-1 sm:order-2">
           {isEditing ? 'Update' : 'Create'} Transaction
         </Button>
       </div>

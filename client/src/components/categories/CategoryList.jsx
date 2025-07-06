@@ -24,14 +24,14 @@ export const CategoryList = ({ categories, onEdit, onDelete }) => {
                 className="w-6 h-6 rounded-full mr-3"
                 style={{ backgroundColor: category.color || '#3b82f6' }}
               ></div>
-              <h3 className="font-medium">{category.name}</h3>
+              <h3 className="font-medium truncate">{category.name}</h3>
             </div>
-            <div className="flex gap-2">
+            <div className="flex flex-col xs:flex-row gap-2">
               <Button
                 size="sm"
                 variant="outline"
                 onClick={() => onEdit(category)}
-                className="flex-1"
+                className="flex-1 py-1 h-8"
               >
                 Edit
               </Button>
@@ -39,7 +39,7 @@ export const CategoryList = ({ categories, onEdit, onDelete }) => {
                 size="sm"
                 variant="outline"
                 onClick={() => onDelete(category._id)}
-                className="flex-1"
+                className="flex-1 py-1 h-8"
               >
                 Delete
               </Button>

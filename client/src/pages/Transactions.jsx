@@ -81,10 +81,14 @@ const Transactions = () => {
       
       <div className="mb-8">
         <Card>
-          <CardContent className="p-6">
+          <CardContent className="p-4 sm:p-6">
             <h3 className="text-lg font-medium mb-4">Monthly Expenses</h3>
             {monthlyData.length > 0 ? (
-              <MonthlyExpensesChart data={monthlyData} />
+              <div className="w-full overflow-x-auto">
+                <div className="min-w-[480px]">
+                  <MonthlyExpensesChart data={monthlyData} />
+                </div>
+              </div>
             ) : (
               <div className="flex items-center justify-center h-[200px]">
                 <p className="text-muted">No monthly data available</p>

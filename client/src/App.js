@@ -14,6 +14,8 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 // Main layout component that wraps all pages
 import { Layout } from './components/layout/layout';
+// Theme transition animation overlay
+import ThemeTransitionOverlay from './components/ui/ThemeTransitionOverlay';
 // Page components
 import Dashboard from './pages/Dashboard';       // Main dashboard with overview
 import Transactions from './pages/Transactions'; // Transaction management
@@ -42,6 +44,9 @@ import './App.css';
 function App() {
   return (
     <Router>
+      {/* Theme transition overlay for animation when toggling themes */}
+      <ThemeTransitionOverlay />
+      
       {/* Transaction provider - outermost data context */}
       <TransactionProvider>
         {/* Category provider - categories needed for transactions */}

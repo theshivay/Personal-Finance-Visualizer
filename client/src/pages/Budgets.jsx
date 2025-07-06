@@ -147,14 +147,18 @@ const Budgets = () => {
       
       <div className="mb-8">
         <Card>
-          <CardContent className="p-6">
+          <CardContent className="p-4 sm:p-6">
             <h3 className="text-lg font-medium mb-4">Budget vs. Actual Spending</h3>
             {isLoading ? (
               <div className="flex items-center justify-center h-[200px]">
                 <p>Loading budget data...</p>
               </div>
             ) : comparisonData.length > 0 ? (
-              <BudgetComparisonChart data={comparisonData} />
+              <div className="w-full overflow-x-auto">
+                <div className="min-w-[480px]">
+                  <BudgetComparisonChart data={comparisonData} />
+                </div>
+              </div>
             ) : (
               <div className="flex items-center justify-center h-[200px]">
                 <p className="text-muted">No budget comparison data available</p>

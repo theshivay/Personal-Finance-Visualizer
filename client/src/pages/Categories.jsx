@@ -104,10 +104,14 @@ const Categories = () => {
       
       <div className="mb-8">
         <Card>
-          <CardContent className="p-6">
+          <CardContent className="p-4 sm:p-6">
             <h3 className="text-lg font-medium mb-4">Category Distribution</h3>
             {categoryData.length > 0 ? (
-              <CategoryPieChart data={categoryData} />
+              <div className="w-full flex justify-center">
+                <div className="w-full max-w-[400px]">
+                  <CategoryPieChart data={categoryData} />
+                </div>
+              </div>
             ) : (
               <div className="flex items-center justify-center h-[200px]">
                 <p className="text-muted">No category data available</p>

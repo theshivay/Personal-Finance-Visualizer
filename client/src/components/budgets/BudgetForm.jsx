@@ -137,7 +137,7 @@ export const BudgetForm = ({ budget, onSave, onCancel }) => {
         </div>
       )}
       
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <Label htmlFor="month">Month</Label>
           <Select
@@ -177,11 +177,11 @@ export const BudgetForm = ({ budget, onSave, onCancel }) => {
         </div>
       )}
       
-      <div className="flex justify-end gap-2">
-        <Button type="button" variant="outline" onClick={onCancel}>
+      <div className="flex flex-col sm:flex-row justify-end gap-2">
+        <Button type="button" variant="outline" onClick={onCancel} className="w-full sm:w-auto">
           Cancel
         </Button>
-        <Button type="submit">
+        <Button type="submit" className="w-full sm:w-auto">
           {isEditing ? 'Update' : 'Create'} Budget
         </Button>
       </div>

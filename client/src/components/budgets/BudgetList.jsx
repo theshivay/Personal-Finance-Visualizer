@@ -46,7 +46,7 @@ export const BudgetList = ({ budgets, onEdit, onDelete }) => {
       {safeBudgets.map((budget) => (
         <Card key={budget._id} className="overflow-hidden">
           <CardContent className="p-4">
-            <div className="flex justify-between items-center">
+            <div className="flex flex-col sm:flex-row justify-between gap-2 sm:gap-0 sm:items-center">
               <div>
                 <h3 className="font-medium">
                   {getCategoryName(budget.categoryId)}
@@ -55,7 +55,7 @@ export const BudgetList = ({ budgets, onEdit, onDelete }) => {
                   {getMonthName(budget.month)} {budget.year}
                 </p>
               </div>
-              <div className="text-right">
+              <div className="flex flex-row items-center justify-between sm:flex-col sm:items-end">
                 <div className="font-bold">
                   {formatCurrency(budget.amount)}
                 </div>
@@ -64,6 +64,7 @@ export const BudgetList = ({ budgets, onEdit, onDelete }) => {
                     size="sm"
                     variant="outline"
                     onClick={() => onEdit(budget)}
+                    className="px-3 py-1 h-8"
                   >
                     Edit
                   </Button>
@@ -71,6 +72,7 @@ export const BudgetList = ({ budgets, onEdit, onDelete }) => {
                     size="sm"
                     variant="outline"
                     onClick={() => onDelete(budget._id)}
+                    className="px-3 py-1 h-8"
                   >
                     Delete
                   </Button>

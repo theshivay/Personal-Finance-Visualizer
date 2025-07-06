@@ -103,12 +103,12 @@ const Dashboard = () => {
   
   return (
     <PageContainer>
-      <div className="flex justify-between items-center mb-8">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-8 gap-3">
         <PageHeader title="Financial Dashboard" description="Overview of your personal finances" className="mb-0 pb-0 border-0" />
-        <div className="text-sm text-muted-light dark:text-muted-dark">
+        <div className="text-xs sm:text-sm text-muted-light dark:text-muted-dark shrink-0">
           Last updated: {new Date().toLocaleDateString('en-US', {
             year: 'numeric',
-            month: 'long',
+            month: 'short',
             day: 'numeric',
             hour: '2-digit',
             minute: '2-digit'
