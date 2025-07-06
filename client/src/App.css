@@ -1,0 +1,43 @@
+/* Add custom styles here that can't be easily done with Tailwind */
+.recharts-wrapper .recharts-cartesian-grid-horizontal line:last-child,
+.recharts-wrapper .recharts-cartesian-grid-vertical line:last-child {
+  stroke-opacity: 0;
+}
+
+/* Responsive containers */
+@media (max-width: 640px) {
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+/* Error states for forms */
+.error-text {
+  color: #ef4444;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+.error-input {
+  border-color: #ef4444;
+}
+
+/* Loading spinner */
+.spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border-left-color: #3b82f6;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
