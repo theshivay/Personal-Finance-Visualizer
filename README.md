@@ -2,7 +2,7 @@
 
 A comprehensive full-stack web application for tracking personal finances with detailed visualization capabilities. Monitor your transactions, categorize expenses, set budgets, and gain insights into your spending patterns through interactive charts and analytics.
 
-![Personal Finance Visualizer](https://via.placeholder.com/800x400?text=Personal+Finance+Visualizer)
+![Personal Finance Visualizer](./client/public/Assets/DashBoard.png)
 
 ## ✨ Features
 
