@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { cn } from '../../lib/utils';
+import ChatbotAssistant from '../ui/ChatbotAssistant';
 
 // Dark mode toggle
 const ThemeToggle = () => {
@@ -459,6 +460,9 @@ export const Layout = ({ children }) => {
           © {new Date().getFullYear()} Finance Tracker. All rights reserved.
         </div>
       </footer>
+      
+      {/* Chatbot Assistant */}
+      <ChatbotAssistant />
     </div>
   );
 };

@@ -1,8 +1,10 @@
-# Personal Finance Visualizer
+# Personalised Finance Tracker
 
-A comprehensive full-stack web application for tracking personal finances with detailed visualization capabilities. Monitor your transactions, categorize expenses, set budgets, and gain insights into your spending patterns through interactive charts and analytics.
+A comprehensive full-stack web application for tracking personal finances with detailed visualization capabilities and AI-powered insights. Monitor your transactions, categorize expenses, set budgets, and gain insights into your spending patterns through interactive charts, analytics, and a helpful chatbot assistant.
 
-![Personal Finance Visualizer](./client/public/Assets/DashBoard.png)
+![Personalised Finance Tracker](./client/public/Assets/DashBoard.png)
+
+![Mobile View](./client/public/Assets/Mobile_View.png)
 
 ## ✨ Features
 
@@ -27,8 +29,15 @@ A comprehensive full-stack web application for tracking personal finances with d
 - **Category Breakdown**: Interactive pie chart displaying spending by category
 - **Budget Comparison**: Visual representation of planned vs. actual spending
 
+### AI-Powered Features
+- **Chatbot Assistant**: AI-powered financial assistant that can answer questions about your finances
+- **Spending Insights**: Get personalized recommendations based on your spending patterns
+- **Natural Language Queries**: Ask questions about your finances in plain English
+- **Expense Analysis**: Receive AI-generated analysis of your spending habits
+
 ### UI/UX Features
 - **Responsive Design**: Fully responsive interface that works on mobile, tablet, and desktop
+- **Dark/Light Theme**: Toggle between dark and light themes with smooth transitions
 - **Modern UI Components**: Built with shadcn/ui for a clean, consistent look
 - **Form Validation**: Comprehensive client-side validation for all forms
 - **Error Handling**: Graceful error states with user-friendly messages
@@ -57,11 +66,17 @@ A comprehensive full-stack web application for tracking personal finances with d
 - **Morgan**: HTTP request logger middleware
 - **dotenv**: Environment variable management
 
+### AI Integration
+- **Google Generative AI (Gemini)**: Advanced language model for chatbot functionality
+- **Natural Language Processing**: Understand and respond to user queries about finances
+- **Financial Insights**: AI-powered analysis of spending patterns and budget recommendations
+
 ## 📁 Project Structure
 
 ```
 /client                # React frontend
   /public              # Public assets and static files
+    /Assets            # Images and other static assets
   /src                 # Source code
     /api               # API service layer with Axios
     /components        # Reusable UI components
@@ -71,10 +86,12 @@ A comprehensive full-stack web application for tracking personal finances with d
       /dashboard       # Dashboard components
       /layout          # Layout components (header, footer)
       /transactions    # Transaction-related components
-      /ui              # Base UI components (buttons, inputs)
+      /ui              # Base UI components (buttons, inputs, theme switcher)
     /context           # React Context providers for global state
     /lib               # Utility functions and helpers
     /pages             # Page components
+    /services          # Service layer for external API integration
+    /utils             # Utility functions including AI helper
     
 /server                # Express.js backend
   /models              # MongoDB/Mongoose data models
@@ -85,16 +102,17 @@ A comprehensive full-stack web application for tracking personal finances with d
 ## 🚀 Getting Started
 
 ### Prerequisites
-- **Node.js**: v16.0.0 or higher
-- **MongoDB**: v4.0 or higher
-- **npm**: v7.0.0 or higher
+- **Node.js**: v18.0.0 or higher
+- **MongoDB**: v5.0 or higher
+- **npm**: v8.0.0 or higher
+- **Google Generative AI API Key**: Required for chatbot functionality (get from https://ai.google.dev/)
 
 ### Installation
 
 1. **Clone the repository**
 ```bash
-git clone https://github.com/theshivay/Personal-Finance-Visualizer.git
-cd Personal-Finance-Visualizer
+git clone https://github.com/theshivay/Personalised-Finance-Tracker.git
+cd Personalised-Finance-Tracker
 ```
 
 2. **Server Setup**
@@ -111,6 +129,10 @@ npm install
 ```bash
 cd ../client
 npm install
+
+# Create a .env file with:
+# REACT_APP_GEMINI_API_KEY=your_gemini_api_key
+# REACT_APP_API_URL=http://localhost:5001/api
 ```
 
 4. **Seed the database** (optional)
@@ -214,12 +236,36 @@ The application will be available at:
 6. **Merge**: Merge changes into main branch
 7. **Deploy**: Deploy to production environment
 
-## Contribution
+## 🤝 Contribution
 Contributions are welcome! Feel free to submit a pull request or open an issue.
 
-## Contact
+1. Fork the repository
+2. Create your feature branch: `git checkout -b feature/amazing-feature`
+3. Commit your changes: `git commit -m 'Add some amazing feature'`
+4. Push to the branch: `git push origin feature/amazing-feature`
+5. Open a pull request
+
+## 🔒 Security
+- All sensitive data is stored securely
+- API keys are kept in environment variables
+- HTTPS is used for all communication with the backend
+- User data is never shared with third parties
+
+## 🔜 Upcoming Features
+- **Recurring Transactions**: Set up automatic tracking of regular expenses and income
+- **Export/Import**: Export data to CSV/PDF or import from bank statements
+- **Advanced Analytics**: More detailed insights with year-over-year comparisons
+- **Mobile App**: Native mobile applications for iOS and Android
+- **Enhanced AI Features**: More advanced financial advice and predictions
+
+## 📧 Contact
 If you have any questions or need further assistance, feel free to contact:
 
 - **Developer**: Shivam Mishra
-- **Website**: Personalised Finance Visualizer
+<!-- - **Portfolio**: [shivammishra.dev](https://shivammishra.dev) -->
+- **GitHub**: [theshivay](https://github.com/theshivay)
 - **Email**: shivammishraeee@gmail.com
+<!-- - **LinkedIn**: [shivammishra](https://www.linkedin.com/in/shivammishra/) -->
+
+<!-- ## 📄 License
+This project is licensed under the MIT License - see the LICENSE file for details. -->
