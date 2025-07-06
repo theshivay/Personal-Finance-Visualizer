@@ -1,10 +1,14 @@
-# Personalised Finance Tracker
+# FinIQ: Personalised Finance Tracker
+
+<!-- <div align="center">
+  <img src="./client/public/finance-icon.svg" alt="FinIQ Icon" width="150" height="150"/>
+</div> -->
 
 A comprehensive full-stack web application for tracking personal finances with detailed visualization capabilities and AI-powered insights. Monitor your transactions, categorize expenses, set budgets, and gain insights into your spending patterns through interactive charts, analytics, and a helpful chatbot assistant.
 
 ![Personalised Finance Tracker](./client/public/Assets/DashBoard.png)
 
-![Mobile View](./client/public/Assets/Mobile_View.png)
+<!-- ![Mobile View](./client/public/Assets/Mobile_View.png) -->
 
 ## ✨ Features
 
@@ -251,6 +255,23 @@ Contributions are welcome! Feel free to submit a pull request or open an issue.
 - HTTPS is used for all communication with the backend
 - User data is never shared with third parties
 
+<!-- ## 🏷️ Branding & Business Name Options
+
+### FinIQ
+This name combines "Finance" with "IQ", suggesting financial intelligence and smart money management. The "IQ" also hints at the AI-powered features that help users make intelligent financial decisions.
+
+### Other Business Name Options:
+1. **WealthWise**: Emphasizes making wise financial decisions for building wealth
+2. **MoneyMentor**: Positions the app as a guide or mentor for financial decisions
+3. **FiscalAI**: Directly references the AI-powered financial assistance features
+4. **SmartSpend**: Focuses on the app's ability to help users spend more intelligently
+5. **BudgetBrain**: Highlights the intelligent budgeting capabilities
+6. **FinFlow**: Suggests smooth financial management and cash flow tracking
+7. **WalletWiz**: Positions the app as a financial wizard for your wallet
+8. **CashCompass**: Implies guidance through financial decisions
+9. **ExpenseExpert**: Emphasizes expertise in tracking and analyzing expenses
+10. **PennySage**: Combines penny-wise decision making with financial wisdom -->
+
 ## 🔜 Upcoming Features
 - **Recurring Transactions**: Set up automatic tracking of regular expenses and income
 - **Export/Import**: Export data to CSV/PDF or import from bank statements
@@ -262,9 +283,9 @@ Contributions are welcome! Feel free to submit a pull request or open an issue.
 If you have any questions or need further assistance, feel free to contact:
 
 - **Developer**: Shivam Mishra
-<!-- - **Portfolio**: [shivammishra.dev](https://shivammishra.dev) -->
 - **GitHub**: [theshivay](https://github.com/theshivay)
 - **Email**: shivammishraeee@gmail.com
+<!-- - **Portfolio**: [shivammishra.dev](https://shivammishra.dev) -->
 <!-- - **LinkedIn**: [shivammishra](https://www.linkedin.com/in/shivammishra/) -->
 
 <!-- ## 📄 License
