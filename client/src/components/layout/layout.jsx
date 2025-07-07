@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { cn } from '../../lib/utils';
 import ChatbotAssistant from '../ui/ChatbotAssistant';
+import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa';
 
 // Dark mode toggle
 const ThemeToggle = () => {
@@ -456,8 +457,41 @@ export const Layout = ({ children }) => {
         {children}
       </main>
       <footer className="border-t border-border-light dark:border-border-dark py-6 mt-8">
-        <div className="container px-4 sm:px-6 lg:px-8 mx-auto text-center text-muted-light dark:text-muted-dark text-sm">
-          © {new Date().getFullYear()} Finance Tracker. All rights reserved.
+        <div className="container px-4 sm:px-6 lg:px-8 mx-auto">
+          <div className="flex flex-col items-center">
+            <div className="flex space-x-4 mb-4">
+              <a 
+                href="https://github.com/theshivay" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-muted-light dark:text-muted-dark hover:text-primary transition-colors"
+                aria-label="GitHub"
+              >
+                <FaGithub size={24} />
+              </a>
+              <a 
+                href="https://www.linkedin.com/in/shivam-mishra-a06654258/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-muted-light dark:text-muted-dark hover:text-primary transition-colors"
+                aria-label="LinkedIn"
+              >
+                <FaLinkedin size={24} />
+              </a>
+              <a 
+                href="https://x.com/ShivamMish88131" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-muted-light dark:text-muted-dark hover:text-primary transition-colors"
+                aria-label="Twitter"
+              >
+                <FaTwitter size={24} />
+              </a>
+            </div>
+            <div className="text-center text-muted-light dark:text-muted-dark text-sm">
+              © {new Date().getFullYear()} Finance Tracker. All rights reserved.
+            </div>
+          </div>
         </div>
       </footer>
       
